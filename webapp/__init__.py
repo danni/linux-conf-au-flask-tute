@@ -5,7 +5,7 @@ WSGI webapp using Flask
 from flask import Flask, render_template
 from flask.ext.wtf import Form
 
-from wtforms import TextField
+from wtforms import TextField, validators
 
 
 app = Flask(__name__)
@@ -21,7 +21,8 @@ def index():
 class RegoForm(Form):
     """A simple rego form"""
 
-    email = TextField('Email')
+    email = TextField('Email', validators=(validators.DataRequired(),
+                                           validators.Email()))
 
 
 @app.route('/register', methods=('GET', 'POST'))
