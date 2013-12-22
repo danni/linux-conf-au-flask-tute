@@ -5,6 +5,11 @@
   </head>
 
   <body>
-    <h1>Hello, linux.conf.au</h1>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    {{ form.email.label }}
+    {{ form.email }}
+    <input type="submit"/>
+  </form>
   </body>
 </html>

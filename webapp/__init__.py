@@ -2,7 +2,10 @@
 WSGI webapp using Flask
 """
 
-from flask import Flask, redirect, render_template, url_for
+from flask import Flask, render_template
+from flask.ext.wtf import Form
+
+from wtforms import TextField
 
 
 app = Flask(__name__)
@@ -15,19 +18,23 @@ def index():
     return "Hello, linux.conf.au"
 
 
-@app.route('/a-redirect')
-def a_redirect():
-    """Redirect the user"""
+class RegoForm(Form):
+    """A simple rego form"""
 
-    return redirect(url_for('a_template'))
+    email = TextField('Email')
 
 
-@app.route('/a-template')
-def a_template():
-    """Render a template"""
+@app.route('/register', methods=('GET', 'POST'))
+def get_register():
+    """Handle the registration form"""
 
-    return render_template('template.html')
+    form = RegoForm()
 
+    if form.validate_on_submit():
+        return "Success"
+
+    return render_template('template.html', form=form)
 
 if __name__ == '__main__':
+    app.secret_key = 'THIS IS REALLY SECRET'
     app.run(debug=True)
