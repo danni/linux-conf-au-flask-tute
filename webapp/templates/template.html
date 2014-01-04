@@ -5,6 +5,7 @@
   </head>
 
   <body>
+  <h3>{{ users|count }} users</h3>
   <form method="post">
     {{ form.hidden_tag() }}
     {{ form.email.label }}
