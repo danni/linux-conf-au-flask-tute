@@ -8,6 +8,7 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
 
+from wtforms import validators
 from wtforms.ext.sqlalchemy.orm import model_form
 
 
@@ -31,7 +32,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(256), unique=True)
 
-UserForm = model_form(User, base_class=Form)
+UserForm = model_form(User, base_class=Form, field_args={
+    'email': {
+        'validators': [validators.Email()],
+    },
+})
 
 
 @app.route('/')
