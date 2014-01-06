@@ -3,3 +3,4 @@
 /bower_components/
 /python_env/
 /app.db
+/webapp/static/bower/

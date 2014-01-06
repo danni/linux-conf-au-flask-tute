@@ -23,6 +23,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from wtforms import validators
 from wtforms.ext.sqlalchemy.orm import model_form
 
+from collectstatic import CollectBower
 
 app = Flask(__name__)
 app.secret_key = 'THIS IS REALLY SECRET'
@@ -46,6 +47,7 @@ class Server(ServerCommand):
         app.running = False
 
 manager.add_command('runserver', Server)
+manager.add_command('collectstatic', CollectBower)
 
 
 class User(db.Model):
