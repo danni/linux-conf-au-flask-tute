@@ -93,8 +93,15 @@ def register():
                            users=User.query.all())
 
 
-@app.route('/events/stream')
+@app.route('/events')
 def get_events():
+    """Returns the events"""
+
+    return render_template('events.html')
+
+
+@app.route('/events/stream')
+def get_events_stream():
     """Returns an event-stream"""
 
     queue = Queue()
