@@ -10,5 +10,6 @@ SQLAlchemy==0.8.4
 WTForms==1.0.5
 Werkzeug==0.9.4
 alembic==0.6.1
+blinker==1.1
 itsdangerous==0.23
 wsgiref==0.1.2
