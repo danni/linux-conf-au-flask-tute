@@ -1,4 +1,5 @@
 .*.sw?
 *.pyc
+/bower_components/
 /python_env/
 /app.db
