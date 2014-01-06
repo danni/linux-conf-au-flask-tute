@@ -2,7 +2,7 @@
 WSGI webapp using Flask
 """
 
-from Queue import Queue
+from Queue import Queue, Empty
 
 from flask import (Flask,
                    Response,
@@ -17,7 +17,7 @@ from flask import (Flask,
 from flask import json
 from flask.ext.wtf import Form
 from flask.ext.migrate import Migrate, MigrateCommand
-from flask.ext.script import Manager
+from flask.ext.script import Manager, Server as ServerCommand
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from wtforms import validators
@@ -34,6 +34,18 @@ db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
+
+
+class Server(ServerCommand):
+    def handle(self, *args, **kwargs):
+        app.running = True
+
+        super(Server, self).handle(*args, **kwargs)
+
+        print "Shutting down"
+        app.running = False
+
+manager.add_command('runserver', Server)
 
 
 class User(db.Model):
@@ -84,6 +96,7 @@ def get_events():
     """Returns an event-stream"""
 
     queue = Queue()
+    running = True
 
     @message_flashed.connect_via(app)
     def store_flashed_message(sender, message, category, **kwargs):
@@ -104,9 +117,14 @@ def get_events():
 
         yield format_messages(get_flashed_messages())
 
-        while True:
-            yield format_messages([queue.get()])
-            queue.task_done()  # eat the queue item
+        while app.running:
+            try:
+                item = queue.get(timeout=1)
+
+                yield format_messages([item])
+                queue.task_done()  # eat the queue item
+            except Empty:
+                pass
 
     return Response(generate(), mimetype='text/event-stream')
 
