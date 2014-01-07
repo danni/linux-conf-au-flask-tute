@@ -12,4 +12,6 @@ Werkzeug==0.9.4
 alembic==0.6.1
 blinker==1.1
 itsdangerous==0.23
+py==1.4.19
+pytest==2.5.1
 wsgiref==0.1.2
