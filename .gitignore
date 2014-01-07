@@ -1,6 +1,9 @@
 .*.sw?
 *.pyc
-/bower_components/
-/python_env/
 /app.db
+/bower_components/
+/build/
+/dist/
+/example.egg-info/
+/python_env/
 /webapp/static/bower/
