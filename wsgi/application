@@ -24,6 +24,3 @@ except IOError:
 # import and configure WSGI application
 
 from webapp import app as application
-
-application.config['SQLALCHEMY_DATABASE_URI'] = \
-    os.environ['OPENSHIFT_POSTGRESQL_DB_URL']
