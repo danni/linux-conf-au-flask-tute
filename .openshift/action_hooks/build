@@ -2,4 +2,8 @@
 
 cd $OPENSHIFT_REPO_DIR
 
+export PATH=$PATH:`npm bin`
+
+npm install bower
+bower install
 python ./manage.py collectstatic
