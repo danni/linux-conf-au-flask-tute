@@ -3,6 +3,7 @@
 cd $OPENSHIFT_REPO_DIR
 
 export PATH=$PATH:`npm bin`
+export NPM_CONFIG_CACHE=$OPENSHIFT_DATA_DIR/npm_cache/
 
 npm install bower
 bower install
