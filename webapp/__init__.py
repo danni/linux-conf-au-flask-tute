@@ -16,38 +16,20 @@ from flask import (Flask,
                    url_for)
 from flask import json
 from flask.ext.wtf import Form
-from flask.ext.migrate import Migrate, MigrateCommand
-from flask.ext.script import Manager, Server as ServerCommand
+from flask.ext.migrate import Migrate
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from wtforms import validators
 from wtforms.ext.sqlalchemy.orm import model_form
 
-from collectstatic import CollectBower
 
 app = Flask(__name__)
 app.secret_key = 'THIS IS REALLY SECRET'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../app.db'
 
-manager = Manager(app)
-
 db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
-manager.add_command('db', MigrateCommand)
-
-
-class Server(ServerCommand):
-    def handle(self, *args, **kwargs):
-        app.running = True
-
-        super(Server, self).handle(*args, **kwargs)
-
-        print "Shutting down"
-        app.running = False
-
-manager.add_command('runserver', Server)
-manager.add_command('collectstatic', CollectBower)
 
 
 class User(db.Model):
@@ -136,7 +118,3 @@ def get_events_stream():
                 pass
 
     return Response(generate(), mimetype='text/event-stream')
-
-
-if __name__ == '__main__':
-    manager.run()
