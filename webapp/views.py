@@ -13,7 +13,7 @@ from flask import (Response,
                    stream_with_context,
                    url_for)
 
-from . import app
+from . import app, db
 from .models import User, UserForm
 
 
