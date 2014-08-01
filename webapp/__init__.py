@@ -14,9 +14,7 @@ app = Flask(__name__)
 
 app.secret_key = os.environ.get('OPENSHIFT_SECRET_TOKEN',
                                 'THIS IS REALLY SECRET')
-app.config['SQLALCHEMY_DATABASE_URI'] = \
-    os.environ.get('OPENSHIFT_POSTGRESQL_DB_URL',
-                   'sqlite:///../app.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DB_DEFAULT_URL']
 
 try:
     app.static_folder = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi')
